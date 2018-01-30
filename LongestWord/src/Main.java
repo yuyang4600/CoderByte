@@ -2,6 +2,8 @@ import java.util.*;
 import java.io.*;
 import java.util.regex.Pattern;
 
+import static com.sun.org.apache.xalan.internal.lib.ExsltStrings.split;
+
 public class Main {
     public static String LongestWord(String sen) {
 
@@ -11,16 +13,16 @@ public class Main {
        call must match the return type of the function.
        You are free to modify the return type. */
 
-        String[] strings = sen.split("[^a-zA-Z]");
-        TreeSet ts = new TreeSet(new ComparatorByLength());
-        List<String> list = new ArrayList<>();
+        String[] strings = sen.replaceAll("[^a-zA-Z]", " ").split(" ");
+        int smallest = 0;
+        String string = "a";
         for(String str:strings) {
-            if(str != null && !str.equals("")) {
-                ts.add(str);
+            if (str.length() > string.length()) {
+                smallest = str.length();
+                string = str;
             }
         }
-        sen = ts.first().toString();
-        return sen;
+        return string;
 
     }
     public static void main (String[] args) {
@@ -29,20 +31,5 @@ public class Main {
         System.out.print(LongestWord(s.nextLine()));
     }
 }
-/**
- * 定义比较器
- * @author yangyu
- *
- */
-class ComparatorByLength implements Comparator {
 
-    @Override
-    public int compare(Object o1, Object o2) {
-        String s1 = (String)o1;
-        String s2 = (String)o2;
-        int temp = s1.length()-s2.length();
-        return temp==0? temp:s1.compareTo(s2);
-    }
-
-}
 
